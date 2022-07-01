@@ -32,7 +32,29 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const tasksCollection = client.db("todo-manager").collection("task");
         const completeTaskCollection = client.db("complete-todo").collection("complete");
 
+
         
+        app.put("/task/:id", async (req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            console.log("from update api", data);
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+      
+            const updateDoc = {
+              $set: {
+                title: data.title,
+                textData: data.textData,
+              },
+            };
+      
+            const result = await tasksCollection.updateOne(
+              filter,
+              updateDoc,
+              options
+            );
+            res.send(result);
+          });
 
         console.log("Connected to MongoDB database");
   } finally {
