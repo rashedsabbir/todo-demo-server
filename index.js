@@ -65,6 +65,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
             res.send(result);
           });
 
+          app.post('/complete', async (req, res) => {
+
+            const data = req.body;
+            const result = await completeTaskCollection.insertOne(data);
+            res.send(result)
+          })
+
         console.log("Connected to MongoDB database");
   } finally {
   }
