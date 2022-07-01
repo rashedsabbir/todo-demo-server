@@ -34,7 +34,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
         app.get("/tasks", async (req, res) => {
             const q = req.query;
-            console.log(q);
+            
       
             const cursor = tasksCollection.find(q);
       
@@ -45,7 +45,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
           app.post("/task", async (req, res) => {
             const data = req.body;
-            console.log("from post api", data);
+            console.log("Posted todo", data);
       
             const result = await tasksCollection.insertOne(data);
       
@@ -55,7 +55,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         app.put("/task/:id", async (req, res) => {
             const id = req.params.id;
             const data = req.body;
-            console.log("from update api", data);
+            console.log("Updated", data);
             const filter = { _id: ObjectId(id) };
             const options = { upsert: true };
       
