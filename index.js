@@ -43,6 +43,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
             res.send(result);
           });
 
+          app.post("/task", async (req, res) => {
+            const data = req.body;
+            console.log("from post api", data);
+      
+            const result = await tasksCollection.insertOne(data);
+      
+            res.send(result);
+          });  
+
         app.put("/task/:id", async (req, res) => {
             const id = req.params.id;
             const data = req.body;
