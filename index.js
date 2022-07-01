@@ -83,12 +83,26 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
             res.send(result);
           });
 
+          app.get('/complete-task', async (req, res) => {
+            const result = await completeTaskCollection.find({}).toArray();
+            res.send(result)
+          })
+
+
+
           app.post('/complete', async (req, res) => {
 
             const data = req.body;
             const result = await completeTaskCollection.insertOne(data);
             res.send(result)
           })
+
+          app.delete("/complete/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await completeTaskCollection.deleteOne(filter);
+            res.send(result);
+          });
 
         console.log("Connected to MongoDB database");
   } finally {
