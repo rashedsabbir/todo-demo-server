@@ -32,8 +32,17 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const tasksCollection = client.db("todo-manager").collection("task");
         const completeTaskCollection = client.db("complete-todo").collection("complete");
 
+        app.get("/tasks", async (req, res) => {
+            const q = req.query;
+            console.log(q);
+      
+            const cursor = tasksCollection.find(q);
+      
+            const result = await cursor.toArray();
+      
+            res.send(result);
+          });
 
-        
         app.put("/task/:id", async (req, res) => {
             const id = req.params.id;
             const data = req.body;
