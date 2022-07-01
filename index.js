@@ -65,6 +65,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
             res.send(result);
           });
 
+          app.delete("/task/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+      
+            const result = await tasksCollection.deleteOne(filter);
+      
+            res.send(result);
+          });
+
           app.post('/complete', async (req, res) => {
 
             const data = req.body;
